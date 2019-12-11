@@ -1,11 +1,17 @@
-Example Voting App
-=========
+This application is a sample voting app. The application has 3 components namely, voting-app, worker node and the result app.
+The voting app is a pyhton based application which is interacting with a redis container for casting and temporarily storing the vote.
+The worker node is talking to the redis and the postgres database where the vote gets stored.
+The result app is a node-js application which displays the casted vote read from the db to the UI.
 
-Getting started
----------------
+To run this application, we need 5 containers to be run in the respective order: redis, vote, db, worker, result.
+Use the following commands for running the containers:
+```
+docker run -d --name=redis redis
 
-Download [Docker](https://www.docker.com/products/overview). If you are on Mac or Windows, [Docker Compose](https://docs.docker.com/compose) will be automatically installed. On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).
+docker run -d -p 5000:80 --name=vote --link=redis:redis burhanhusain/votingapp_vote
 
+docker run -d --name=db postgres
+```
 Run in this directory:
 ```
 docker-compose up
@@ -31,9 +37,3 @@ Architecture
 * A .NET worker which consumes votes and stores them in…
 * A Postgres database backed by a Docker volume
 * A Node.js webapp which shows the results of the voting in real time
-
-
-Note
-----
-
-The voting application only accepts one vote per client. It does not register votes if a vote has already been submitted from a client.
