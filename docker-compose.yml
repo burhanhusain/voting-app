@@ -2,7 +2,7 @@ version: "3"
 
 services:
   vote:
-    build: ./vote
+    build: ./votingapp_vote
     command: python app.py
     volumes:
      - ./vote:/app
@@ -13,7 +13,7 @@ services:
       - back-tier
 
   result:
-    build: ./result
+    build: ./votingapp_result
     command: nodemon --debug server.js
     volumes:
       - ./result:/app
@@ -26,7 +26,7 @@ services:
 
   worker:
     build:
-      context: ./worker
+      context: .votingapp_/worker
     networks:
       - back-tier
 
