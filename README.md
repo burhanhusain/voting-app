@@ -8,9 +8,13 @@ Use the following commands for running the containers:
 ```
 docker run -d --name=redis redis
 
-docker run -d -p 5000:80 --name=vote --link=redis:redis burhanhusain/votingapp_vote
+docker run -d -p 5000:80 --name=vote --link redis:redis burhanhusain/votingapp_vote
 
-docker run -d --name=db postgres
+docker run -d --name=db postgres:9.4
+
+docker run -d --name=worker --link redis:redis --link db:db burhsnhusain/worker-app
+
+docker run -d -p 5001:80 --name=result --link db:db burhanhusain/result-app
 ```
 Run in this directory:
 ```
